@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Destination</title>
+  </head>
+  <body>
+    <li><a href="{% url 'exam_app:travel' %}">Home</a></li>
+    <li><a href="{% url 'exam_app:logout' %}">Logout</a></li>
+    <h1>{{request.session.user.destination}} </h1>
+    <table border="1">
+          <thread>
+            <tr>
+              <th>Planned By:</th>
+              <th>Description:</th>
+              <th>Travel Date From:</th>
+              <th>Travel Date To:</th>
+            </tr>
+          </thread>
+          <tbody>
+            {% if travel %}
+            <tr>
+              <td>{{travel.planuser.name}}</td>
+              <td>{{travel.description}}</td>
+              <td>{{travel.startdate}}</td>
+              <td>{{travel.enddate}}</td>
+            </tr>
+            {% endif %}
+          </tbody>
+    </table>
+    <h3>Other users' joining the trip</h3>
+
+      {% if travel.joinusers.all %}
+        {% for joinuser in travel.joinusers.all %}
+        <p>{{joinuser.name}} </p>
+        {% endfor %}
+      {% endif %}
+     
+  </body>
+</html>

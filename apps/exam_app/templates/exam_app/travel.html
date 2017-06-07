@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Travel Plans</title>
+  </head>
+
+  <body>
+    <li><a href="{% url 'exam_app:logout' %}">Logout</a></li>
+      <h1>Welcome, {{request.session.user.name}} </h1>
+      <h2>Your Trip Schedules</h2>
+      <table border="1">
+            <thread>
+              <tr>
+                <th>Destination</th>
+                <th>Travel Start Date</th>
+                <th>Travel End Date</th>
+                <th>Plan</th>
+              </tr>
+            </thread>
+            <tbody>
+              {% if my_plans %}
+              {% for my_plan in my_plans %}
+              <tr>
+                <td><a href="{% url 'exam_app:destination' my_plan.id %}">{{my_plan.destination}}</a></td>
+                <td>{{my_plan.startdate}}</td>
+                <td>{{my_plan.enddate}}</td>
+                <td>{{my_plan.description}}</td>
+              </tr>
+              {% endfor %}
+              {% endif %}
+            </tbody>
+          </table>
+      <h2> Other Users' Travel Plans:</h2>
+    <table border="1">
+      <thread>
+        <tr>
+          <th>Name</th>
+          <th>Destination</th>
+          <th>Travel Start Date</th>
+          <th>Travel End Date</th>
+          <th>Do You Want to Join?</th>
+        </tr>
+      </thread>
+      <tbody>
+        {% if other_plans %}
+        {% for other_plan in other_plans %}
+        <tr>
+          <td>{{other_plan.planuser.name}}</td>
+          <td><a href="{% url 'exam_app:destination' other_plan.id %}">{{other_plan.destination}}</td>
+          <td>{{other_plan.startdate}}</td>
+          <td>{{other_plan.enddate}}</td>
+          <td><li><a href="{% url 'exam_app:join' other_plan.id %}">Join</a></li></td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+      </tbody>
+    </table>
+<a href="{% url 'exam_app:addtravel' %}">Add Travel Plan</a>
+
+  </body>
+</html>
